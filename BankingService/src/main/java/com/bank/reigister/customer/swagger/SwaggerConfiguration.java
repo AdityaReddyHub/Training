@@ -29,7 +29,7 @@ public Docket api() {
  
  @SuppressWarnings("deprecation")
 private ApiInfo getapiInfo() {
-	 return new ApiInfo("Banking Api", "Customer Registration and Transaction Process", "1.0","","Aditya Reddy","Apache License 2.0", "");
+	 return new ApiInfo("BankingService Api", "Customer Registration and Transaction Process", "1.0","","Aditya Reddy","Apache License 2.0", "");
 	 
  }
 
