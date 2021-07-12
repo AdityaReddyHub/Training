@@ -121,6 +121,7 @@ public class CustomerService {
 	
 	public AccountDetails customerTransaction(String username, String password,TransactionDetails transDetails) {
 		String beneficrAcNo = transDetails.getBeneficiaryAccNumber();
+		String productname = transDetails.getProductname();
 		CustomerCredentials creds =  accountsRepository.findByUsernameAndPassword(username, password);
 		AccountDetails acDetls=null;
 		
@@ -154,6 +155,7 @@ public class CustomerService {
 					acDetls = creds.getAccountDetails();
 					acDetls.setAmount(accHoldBalanceAmt);
 					acDetls.getBeneficiaryAccs().get(i).setAmount(benBalanceAmt);
+					acDetls.getBeneficiaryAccs().get(i).setProductname(productname);
 					
 					acDetls =  customerRepos.save(acDetls);
 					

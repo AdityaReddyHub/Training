@@ -17,6 +17,9 @@ public class BeneficiaryAccounts {
 	//private String accholderpannumber;
 	private String beneficrpannumber;
 	private double amount;
+	private String productname;
+	
+	
 	
 	/*
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -46,6 +49,14 @@ public class BeneficiaryAccounts {
 	public void setCreds(CustomerCredentials creds) {
 		this.creds = creds;
 	} */
+
+	public String getProductname() {
+		return productname;
+	}
+
+	public void setProductname(String productname) {
+		this.productname = productname;
+	}
 
 	public int getId() {
 		return id;

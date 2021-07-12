@@ -1,5 +1,9 @@
 package com.bank.reigister.customer.controllers;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.reigister.customer.dtos.TransactionDetails;
 import com.bank.reigister.customer.entities.AccountDetails;
+import com.bank.reigister.customer.entities.BeneficiaryAccounts;
 import com.bank.reigister.customer.services.CustomerService;
 
 @RestController
@@ -25,6 +30,48 @@ public class TransactionController {
 	
 	@Autowired
 	CustomerService service;
+	
+/*	@Autowired
+	OrderInterface orderInterface;
+	
+	@Autowired
+	UserOrder uOrder;
+*/	
+	@PostMapping
+	public ResponseEntity<Map<String,String>> buyProducts(@RequestParam(value = "productname") String productname,@RequestParam(value = "username") String username,
+			@RequestParam(value="password") String password,@RequestParam(value = "beneficiaryAccNumber") String beneficiaryAccNumber,
+			@RequestParam(value="transactAmount") int transactAmount){
+		
+		TransactionDetails tnsDetails = new TransactionDetails();
+		tnsDetails.setBeneficiaryAccNumber(beneficiaryAccNumber);
+		tnsDetails.setTransactAmount(transactAmount);
+		tnsDetails.setProductname(productname);
+		
+		AccountDetails aDetls = service.customerTransaction(username, password, tnsDetails);
+		
+		Map<String,String> list = new HashMap<String,String>();
+		
+		list.put("AccountHoldersACNumber", aDetls.getAccountnumber());
+		
+		List<BeneficiaryAccounts> bAcs = aDetls.getBeneficiaryAccs();
+		String benefcrACNumber=null;
+		for(int i=0;i<bAcs.size();i++) {
+			benefcrACNumber = bAcs.get(i).getAccountnumber();
+		}
+		
+		list.put("Ecommerce ACNumber", benefcrACNumber);
+		list.put("Purchased Amount", String.valueOf(tnsDetails.getTransactAmount()));
+		
+	/*	uOrder.setId(0);
+		uOrder.setName(productname);
+		uOrder.setOrderprice(transactAmount);
+		
+		orderInterface.createOrder(uOrder); */
+		
+		
+		
+		return new ResponseEntity<Map<String,String>>(list,HttpStatus.OK);
+	}
 	
 	@PostMapping("/")
 	public ResponseEntity<AccountDetails> custTransaction(@RequestParam(value = "username") String username,
