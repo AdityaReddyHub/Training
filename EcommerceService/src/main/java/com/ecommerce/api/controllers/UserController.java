@@ -45,9 +45,9 @@ public class UserController {
 	@Autowired
 	CustomerRegisterInterface custInterface;
 	
-	/*
-	 * @Autowired CircuitBreakerFactory cicuiteBreakerFactory;
-	 */
+	
+	@Autowired CircuitBreakerFactory cicuiteBreakerFactory;
+	 
 	
 /*	@Autowired
 	UserOrder uorder;
@@ -81,24 +81,23 @@ public class UserController {
 	@GetMapping("/getproducts")
 	public ResponseEntity<?> searchProductsToBuy() {
 		
-		//CircuitBreaker circuiteBreaker = cicuiteBreakerFactory.create("product-service");
+		CircuitBreaker circuiteBreaker = cicuiteBreakerFactory.create("product-service");
 		
 		log.info("Calling Products for search product");
 		
-		//return circuiteBreaker.run(()->productsInterface.allAvailableProducts(),throwble -> getDefaultInfo());
+		return circuiteBreaker.run(()->productsInterface.allAvailableProducts(),throwble -> getDefaultInfo());
 		
 		
-		 return productsInterface.allAvailableProducts();
+		 //return productsInterface.allAvailableProducts();
 		
 	}
 	
-	/*
-	 * private ResponseEntity<?> getDefaultInfo() { // TODO Auto-generated method
-	 * stub
-	 * 
-	 * String msg = "Product Service is down, Please try after some time"; return
-	 * new ResponseEntity<>(msg,HttpStatus.OK); }
-	 */
+	
+	  private ResponseEntity<?> getDefaultInfo() { 
+	  
+	  String msg = "Product Service is down, Please try after some time"; return
+	  new ResponseEntity<>(msg,HttpStatus.OK); }
+	 
 
 	@GetMapping("/{name}")
 	public ResponseEntity<Product> searchProduct(@PathVariable String name) {

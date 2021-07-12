@@ -1,4 +1,4 @@
-package com.ecommerce.api;
+package com.ecommerce.userproducts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients
 @EnableEurekaClient
-public class EcommerceServiceApplication {
+public class UserProductServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EcommerceServiceApplication.class, args);
+		SpringApplication.run(UserProductServiceApplication.class, args);
 	}
 
 }
